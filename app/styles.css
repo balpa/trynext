@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .glowing-text {
+        text-shadow: 0 0 40px #ffa500;
+        color: #ffb329;
+    }
+}
