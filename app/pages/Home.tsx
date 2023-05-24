@@ -14,7 +14,7 @@ export default function Home() {
     // const options = {
     // method: 'GET',
     // headers: {
-    //     'X-RapidAPI-Key': 'c43f140559msh4ba5e566ba631cdp1247afjsn0e85448d7b06',
+    //     'X-RapidAPI-Key': process.env.API_KEY,
     //     'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
     // }
     // };
