@@ -5,27 +5,25 @@ import '../styles.css'
 
 export default function Home() {
     const [inputValue, setInputValue] = useState<string>('');
+    
+    const endpoint = 'https://imdb8.p.rapidapi.com/auto-complete?q=';
+    const requestOptions: any = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': process.env.NEXT_PUBLIC_API_KEY,
+            'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+        }
+    };
 
     function handleInputOnchange (event: React.FormEvent<HTMLInputElement>) {
         setInputValue(event.currentTarget.value);
     }
 
-    // const url = 'https://imdb8.p.rapidapi.com/auto-complete?q=game%20of%20thr';
-    // const options = {
-    // method: 'GET',
-    // headers: {
-    //     'X-RapidAPI-Key': process.env.API_KEY,
-    //     'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
-    // }
-    // };
-
-    // try {
-    //     const response = await fetch(url, options);
-    //     const result = await response.text();
-    //     console.log(result);
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    async function sendRequest () {
+        await fetch(`${ endpoint }${ inputValue }`, requestOptions)
+        .then(response => response.json())
+        .then(data => console.log(data))
+    }
 
   return (
     <>
@@ -38,6 +36,7 @@ export default function Home() {
             value={ inputValue } 
             onChange={(event) => handleInputOnchange(event)}/>
         <button
+            onClick={() => sendRequest()}
             className='w-3/4 h-8 bg-[#ffb329] rounded text-black font-extrabold mt-2'
         >
         Search
