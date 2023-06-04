@@ -1,10 +1,14 @@
 'use client';
 
 import React, { useState } from 'react'
+import MovieCard from '../components/MovieCard';
+import LoadingIcon from '../components/LoadingIcon';
 import '../styles.css'
 
 export default function Home() {
     const [inputValue, setInputValue] = useState<string>('');
+    const [moviesResponse, setMoviesResponse] = useState<any>(undefined);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     
     const endpoint = 'https://imdb8.p.rapidapi.com/auto-complete?q=';
     const requestOptions: any = {
@@ -20,9 +24,14 @@ export default function Home() {
     }
 
     async function sendRequest () {
+        setIsLoading(true);
+
         await fetch(`${ endpoint }${ inputValue }`, requestOptions)
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            setMoviesResponse(data);
+            setIsLoading(false);
+        })
     }
 
   return (
@@ -42,8 +51,11 @@ export default function Home() {
         Search
         </button>
     </div>
-    <div>
-
+    { isLoading && <LoadingIcon /> }
+    <div className='w-[calc(100%-50px)] p-[20px] flex flex-row justify-center items-center gap-5 flex-wrap'>
+        {moviesResponse &&  moviesResponse.d.map((movie: any, index: number) => 
+            <MovieCard movie={ movie } key={ index } />
+        )}
     </div>
     </>
   )
